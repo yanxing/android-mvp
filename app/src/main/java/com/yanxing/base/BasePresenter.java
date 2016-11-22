@@ -1,4 +1,4 @@
-package com.yanxing.presenter;
+package com.yanxing.base;
 
 /**
  * Created by lishuangxiang on 2016/9/13.

@@ -10,8 +10,9 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:name=".base.MyApplication"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".WeiXinHotActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

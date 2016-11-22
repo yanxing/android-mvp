@@ -1,11 +1,12 @@
 package com.yanxing.presenter;
 
 
-import android.util.Log;
-
-import com.yanxing.dao.DouBanDao;
-import com.yanxing.iview.MainView;
-import com.yanxing.model.DouBan;
+import com.yanxing.base.BasePresenter;
+import com.yanxing.dao.WeiXinDao;
+import com.yanxing.iview.WeiXinHotView;
+import com.yanxing.model.WeiXinHot;
+import com.yanxing.util.ConstantValue;
+import com.yanxing.util.LogUtil;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -17,24 +18,23 @@ import rx.schedulers.Schedulers;
 /**
  * Created by lishuangxiang on 2016/9/13.
  */
-public class MainPresenter extends BasePresenter<MainView> {
+public class WeiXinHotPresenter extends BasePresenter<WeiXinHotView> {
 
-    public MainPresenter(MainView mainView) {
-        this.mView = mainView;
+    public WeiXinHotPresenter(WeiXinHotView weiXinHotView) {
+        this.mView = weiXinHotView;
     }
 
-    public void loadData(){
-        String baseUrl = "https://api.douban.com/v2/movie/";
+    public void loadData(String word,int pageSize,int currentPage){
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(ConstantValue.URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
-        DouBanDao douBanDao = retrofit.create(DouBanDao.class);
-        douBanDao.getTopMovie(0, 10)
+        WeiXinDao weiXinDao = retrofit.create(WeiXinDao.class);
+        weiXinDao.getWeiXinHot(pageSize,word,currentPage)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<DouBan>() {
+                .subscribe(new Subscriber<WeiXinHot>() {
                     @Override
                     public void onCompleted() {
 
@@ -42,13 +42,12 @@ public class MainPresenter extends BasePresenter<MainView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("MainPresenter",e.toString());
+                        LogUtil.e("WeiXinHotPresenter",e.toString());
                     }
 
                     @Override
-                    public void onNext(DouBan douBan) {
-                        Log.d("MainPresenter",douBan.toString());
-                       mView.setData(douBan);
+                    public void onNext(WeiXinHot weiXinHot) {
+                       mView.setData(weiXinHot);
                     }
                 });
     }
