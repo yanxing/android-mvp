@@ -24,6 +24,12 @@ public class WeiXinHotPresenter extends BasePresenter<WeiXinHotView> {
         this.mView = weiXinHotView;
     }
 
+    /**
+     * 加载数据
+     * @param word 关键字
+     * @param pageSize 每页的数量
+     * @param currentPage 当前页
+     */
     public void loadData(String word,int pageSize,int currentPage){
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ConstantValue.URL)

@@ -42,7 +42,9 @@ public abstract class BaseActivity<V, T extends BasePresenter<V>> extends RxFrag
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mPresenter.onDestroy();
+        if (mPresenter!=null){
+            mPresenter.onDestroy();
+        }
     }
 
     /**

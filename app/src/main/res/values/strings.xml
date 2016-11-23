@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">android-mvp</string>
+    <string name="travel">旅行</string>
+    <string name="shoot">摄影</string>
+    <string name="beauty_passage">美文</string>
+    <string name="beauty_food">美食</string>
+    <string name="work">职场</string>
+    <string name="health">健康</string>
+    <string name="woman">女人</string>
+    <string name="belle">美女</string>
+    <string name="official_account">公众号：</string>
 </resources>

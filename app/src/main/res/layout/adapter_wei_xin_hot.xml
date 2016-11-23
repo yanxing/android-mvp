@@ -1,50 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:paddingLeft="@dimen/padding16"
-              android:paddingRight="@dimen/padding16"
-              android:paddingBottom="@dimen/padding14"
-              android:background="@drawable/click_white_dark_selector">
-   <!-- <RelativeLayout
+              android:background="@drawable/click_white_dark_selector"
+              android:orientation="vertical">
+    <!--@drawable/click_white_dark_selector-->
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">-->
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/padding14"
+        android:paddingLeft="@dimen/padding16"
+        android:paddingRight="@dimen/padding16"
+        android:paddingTop="@dimen/padding14">
+
         <TextView
             android:id="@+id/title"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_normal"
+            android:text="招让你的旅行照片赞爆朋友圈！收藏起来旅行正好能用~"
             android:textColor="@color/colorMainDark"
-            android:text="adfadfadfsafjkalsjfalsjfkaadfafafadfaf"/>
+            android:textSize="@dimen/text_normal"/>
+
         <TextView
             android:id="@+id/src"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="11sp"
-            android:layout_below="@id/title"
-            android:layout_marginTop="@dimen/margin30"
+            android:layout_alignParentBottom="true"
+            android:text="公众号：国内旅游攻略"
             android:textColor="@color/colorMainGray"
-            android:text="公众号：国内旅游攻略"/>
+            android:textSize="@dimen/text_low"/>
+
         <TextView
+            android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="11sp"
-            android:textColor="@color/colorMainGray"
-            android:layout_toRightOf="@id/src"
-            android:layout_below="@id/title"
-            android:layout_marginTop="@dimen/margin30"
+            android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/padding16"
-            android:text="2016.11.11"/>
+            android:layout_toRightOf="@id/src"
+            android:text="2016.11.11"
+            android:textColor="@color/colorMainGray"
+            android:textSize="@dimen/text_low"/>
+
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/simple_drawee_view"
             android:layout_width="@dimen/margin80"
             android:layout_height="@dimen/margin80"
             android:layout_alignParentRight="true"
             app:actualImageScaleType="focusCrop"
-            android:layout_marginBottom="@dimen/padding16"
             app:placeholderImage="@mipmap/wei_xin_hot_default"/>
+    </RelativeLayout>
     <View
-        style="@style/Line"
-        android:layout_alignParentBottom="true"/>
-</RelativeLayout>
+        style="@style/Line"/>
+</LinearLayout>
