@@ -38,8 +38,8 @@
             android:text="2016.11.11"/>
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/simple_drawee_view"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/margin80"
+            android:layout_height="@dimen/margin80"
             android:layout_alignParentRight="true"
             app:actualImageScaleType="focusCrop"
             android:layout_marginBottom="@dimen/padding16"

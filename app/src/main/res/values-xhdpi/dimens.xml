@@ -9,8 +9,9 @@
     <dimen name="text_normal_xxx">17sp</dimen>
     <dimen name="padding16">16dp</dimen>
     <dimen name="padding14">14dp</dimen>
-    <dimen name="margin20">20dp</dimen>
-    <dimen name="margin40">40dp</dimen>
-    <dimen name="margin30">30dp</dimen>
-    <dimen name="margin80">80dp</dimen>
+    <dimen name="margin20">10dp</dimen>
+    <dimen name="margin40">20dp</dimen>
+    <dimen name="margin30">15dp</dimen>
+
+    <dimen name="margin80">60dp</dimen>
 </resources>

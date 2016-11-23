@@ -11,6 +11,6 @@
     <dimen name="padding14">14dp</dimen>
     <dimen name="margin20">20dp</dimen>
     <dimen name="margin40">40dp</dimen>
-    <dimen name="margin30">30dp</dimen>
+    <dimen name="margin30">32dp</dimen>
     <dimen name="margin80">80dp</dimen>
 </resources>
