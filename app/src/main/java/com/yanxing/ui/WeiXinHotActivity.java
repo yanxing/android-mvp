@@ -23,6 +23,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /**
  * 微信精选列表
@@ -32,6 +35,9 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
 
     @BindView(R.id.recyclerView)
     RecyclerView mRecyclerView;
+
+    @BindView(R.id.ptrFrameLayout)
+    PtrClassicFrameLayout mPtrFrameLayout;
 
     private RecyclerViewAdapter<WeiXinHot.NewslistBean> mRecyclerViewAdapter;
     private List<WeiXinHot.NewslistBean> mNewsList = new ArrayList<>();
@@ -67,7 +73,13 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
             }
         };
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
-        mPresenter.loadData(mType, 10, 1);
+        mPtrFrameLayout.setPtrHandler(new PtrDefaultHandler() {
+            @Override
+            public void onRefreshBegin(PtrFrameLayout frame) {
+                mPresenter.loadData(mType, 10, 1);
+            }
+        });
+        mPtrFrameLayout.autoRefresh(true);
     }
 
     @Override
@@ -76,6 +88,7 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
             mNewsList = weiXinHot.getNewslist();
             mRecyclerViewAdapter.update(mNewsList);
             mRecyclerView.setAdapter(mRecyclerViewAdapter);
+            mPtrFrameLayout.refreshComplete();
         }
     }
 

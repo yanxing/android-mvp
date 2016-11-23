@@ -100,10 +100,20 @@
                 android:textSize="@dimen/text_normal_x"/>
         </RadioGroup>
     </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerView"
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
+        android:id="@+id/ptrFrameLayout"
+        xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none"/>
+        android:layout_height="match_parent"
+        cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+        cube_ptr:ptr_duration_to_close="300"
+        cube_ptr:ptr_duration_to_close_header="2000"
+        cube_ptr:ptr_keep_header_when_refresh="true"
+        cube_ptr:ptr_pull_to_fresh="true" >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"/>
+        </in.srain.cube.views.ptr.PtrClassicFrameLayout>
 </LinearLayout>
