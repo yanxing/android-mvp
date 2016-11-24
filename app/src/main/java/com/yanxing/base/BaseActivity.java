@@ -3,7 +3,9 @@ package com.yanxing.base;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.WindowManager;
+import android.widget.Toast;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.trello.rxlifecycle.components.support.RxFragmentActivity;
 import com.yanxing.util.CommonUtil;
 
@@ -39,6 +41,27 @@ public abstract class BaseActivity<V, T extends BasePresenter<V>> extends RxFrag
 
     protected abstract T initPresenter();
 
+    /**
+     * 显示toast消息
+     *
+     * @param toast
+     */
+    public void showToast(String toast) {
+        Toast.makeText(this, toast, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onPause() {
+        //列表快速滑动时暂停加载
+        Fresco.getImagePipeline().pause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        Fresco.getImagePipeline().resume();
+        super.onResume();
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();

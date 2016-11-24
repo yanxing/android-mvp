@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="Theme.AppStartLoadTranslucent" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
     <!-- item分割线-->
     <style name="Line">
         <item name="android:layout_width">match_parent</item>

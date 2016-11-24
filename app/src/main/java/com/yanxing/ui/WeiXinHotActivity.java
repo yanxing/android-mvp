@@ -2,7 +2,6 @@ package com.yanxing.ui;
 
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
@@ -42,6 +40,11 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
     private RecyclerViewAdapter<WeiXinHot.NewslistBean> mRecyclerViewAdapter;
     private List<WeiXinHot.NewslistBean> mNewsList = new ArrayList<>();
     private String mType = "旅行";//内容分类
+    /**
+     * 下拉刷新
+     */
+    private boolean mPullDownFresh=true;
+    private int mCurrentPage=1;
     private static final String[] TYPE = new String[]{"旅行", "摄影", "美文", "美食", "职场", "健康", "美女"};
 
     @Override
@@ -76,19 +79,38 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
         mPtrFrameLayout.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
+                mPullDownFresh=true;
                 mPresenter.loadData(mType, 10, 1);
             }
         });
         mPtrFrameLayout.autoRefresh(true);
+        //上拉刷新
+        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (mPresenter.isSlideToBottom(mRecyclerView)){
+                    mPullDownFresh=false;
+                    mPresenter.loadData(mType,10,++mCurrentPage);
+                }
+            }
+        });
     }
 
     @Override
     public void setData(WeiXinHot weiXinHot) {
         if (ErrorCodeUtil.isErrorSuccess(weiXinHot.getCode())) {
-            mNewsList = weiXinHot.getNewslist();
-            mRecyclerViewAdapter.update(mNewsList);
-            mRecyclerView.setAdapter(mRecyclerViewAdapter);
+            if (mPullDownFresh){
+                mNewsList.clear();
+                mNewsList.addAll(weiXinHot.getNewslist());
+                mRecyclerView.setAdapter(mRecyclerViewAdapter);
+            }else {
+                mNewsList.addAll(weiXinHot.getNewslist());
+                mRecyclerViewAdapter.update(mNewsList);
+            }
             mPtrFrameLayout.refreshComplete();
+        }else {
+            showToast(weiXinHot.getMsg());
         }
     }
 
@@ -101,6 +123,8 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
     @OnClick({R.id.travel, R.id.shoot, R.id.beauty_passage
             , R.id.beauty_food, R.id.work, R.id.health, R.id.belle})
     public void onClick(View view) {
+        mCurrentPage=1;
+        mNewsList.clear();
         switch (view.getId()) {
             case R.id.travel:
                 mType = TYPE[0];

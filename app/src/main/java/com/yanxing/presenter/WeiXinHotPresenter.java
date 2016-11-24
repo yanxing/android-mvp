@@ -1,6 +1,8 @@
 package com.yanxing.presenter;
 
 
+import android.support.v7.widget.RecyclerView;
+
 import com.yanxing.base.BasePresenter;
 import com.yanxing.dao.WeiXinDao;
 import com.yanxing.iview.WeiXinHotView;
@@ -56,5 +58,20 @@ public class WeiXinHotPresenter extends BasePresenter<WeiXinHotView> {
                        mView.setData(weiXinHot);
                     }
                 });
+    }
+
+    /**
+     * RecyclerView是否滑动到了底部
+     * @param recyclerView
+     * @return
+     */
+    public boolean isSlideToBottom(RecyclerView recyclerView) {
+        if (recyclerView == null){
+            return false;
+        }
+        if (recyclerView.computeVerticalScrollExtent() + recyclerView.computeVerticalScrollOffset()
+                >= recyclerView.computeVerticalScrollRange())
+            return true;
+        return false;
     }
 }
