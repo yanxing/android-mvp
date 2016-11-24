@@ -26,7 +26,7 @@ import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /**
- * 微信精选列表
+ * 微信精选列表,网络数据和非UI逻辑在WeiXinHotPresenter里面
  */
 public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPresenter>
         implements WeiXinHotView {
@@ -43,8 +43,9 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
     /**
      * 下拉刷新
      */
-    private boolean mPullDownFresh=true;
-    private int mCurrentPage=1;
+    private boolean mPullDownFresh = true;
+    private int mCurrentPage = 1;
+    private static final int PAGE_SIZE = 10;
     private static final String[] TYPE = new String[]{"旅行", "摄影", "美文", "美食", "职场", "健康", "美女"};
 
     @Override
@@ -68,19 +69,20 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent=new Intent(getApplicationContext(),WeiXinHotDetailActivity.class);
-                        intent.putExtra("url",mNewsList.get(position).getUrl());
+                        Intent intent = new Intent(getApplicationContext(), WeiXinHotDetailActivity.class);
+                        intent.putExtra("url", mNewsList.get(position).getUrl());
                         startActivity(intent);
                     }
                 });
             }
         };
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
+        //下拉刷新
         mPtrFrameLayout.setPtrHandler(new PtrDefaultHandler() {
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                mPullDownFresh=true;
-                mPresenter.loadData(mType, 10, 1);
+                mPullDownFresh = true;
+                mPresenter.loadData(mType, PAGE_SIZE, 1);
             }
         });
         mPtrFrameLayout.autoRefresh(true);
@@ -89,9 +91,9 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
-                if (mPresenter.isSlideToBottom(mRecyclerView)){
-                    mPullDownFresh=false;
-                    mPresenter.loadData(mType,10,++mCurrentPage);
+                if (mPresenter.isSlideToBottom(mRecyclerView)) {
+                    mPullDownFresh = false;
+                    mPresenter.loadData(mType, PAGE_SIZE, ++mCurrentPage);
                 }
             }
         });
@@ -100,16 +102,16 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
     @Override
     public void setData(WeiXinHot weiXinHot) {
         if (ErrorCodeUtil.isErrorSuccess(weiXinHot.getCode())) {
-            if (mPullDownFresh){
+            if (mPullDownFresh) {
                 mNewsList.clear();
                 mNewsList.addAll(weiXinHot.getNewslist());
                 mRecyclerView.setAdapter(mRecyclerViewAdapter);
-            }else {
+            } else {
                 mNewsList.addAll(weiXinHot.getNewslist());
                 mRecyclerViewAdapter.update(mNewsList);
             }
             mPtrFrameLayout.refreshComplete();
-        }else {
+        } else {
             showToast(weiXinHot.getMsg());
         }
     }
@@ -123,36 +125,36 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
     @OnClick({R.id.travel, R.id.shoot, R.id.beauty_passage
             , R.id.beauty_food, R.id.work, R.id.health, R.id.belle})
     public void onClick(View view) {
-        mCurrentPage=1;
+        mCurrentPage = 1;
         mNewsList.clear();
         switch (view.getId()) {
             case R.id.travel:
                 mType = TYPE[0];
-                mPresenter.loadData(mType, 10, 1);
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
                 break;
             case R.id.shoot:
                 mType = TYPE[1];
-                mPresenter.loadData(mType, 10, 1);
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
                 break;
             case R.id.beauty_passage:
                 mType = TYPE[2];
-                mPresenter.loadData(mType, 10, 1);
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
                 break;
             case R.id.beauty_food:
                 mType = TYPE[3];
-                mPresenter.loadData(mType, 10, 1);
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
                 break;
             case R.id.work:
                 mType = TYPE[4];
-                mPresenter.loadData(mType, 10, 1);
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
                 break;
             case R.id.health:
                 mType = TYPE[5];
-                mPresenter.loadData(mType, 10, 1);
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
                 break;
             case R.id.belle:
                 mType = TYPE[6];
-                mPresenter.loadData(mType, 10, 1);
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
                 break;
         }
     }
