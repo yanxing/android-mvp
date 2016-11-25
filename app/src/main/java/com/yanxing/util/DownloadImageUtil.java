@@ -1,5 +1,8 @@
 package com.yanxing.util;
 
+import android.os.Handler;
+import android.os.Looper;
+
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -42,7 +45,12 @@ public class DownloadImageUtil {
                         InputStream inStream = conn.getInputStream();
                         FileUtil.writeStInput(FileUtil.getStoragePath() + "DCIM/Camera/"
                                 , System.currentTimeMillis() + ".jpg", inStream);
-                        mDownloadListener.finish();
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                mDownloadListener.finish();
+                            }
+                        });
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
