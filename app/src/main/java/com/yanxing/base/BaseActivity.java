@@ -47,7 +47,7 @@ public abstract class BaseActivity<V, T extends BasePresenter<V>> extends RxFrag
      * @param toast
      */
     public void showToast(String toast) {
-        Toast.makeText(this, toast, Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(), toast, Toast.LENGTH_LONG).show();
     }
 
     @Override

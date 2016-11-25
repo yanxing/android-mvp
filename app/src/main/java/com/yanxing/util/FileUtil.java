@@ -123,7 +123,7 @@ public class FileUtil {
             file = createFile(path + fileName);
             output = new FileOutputStream(file);
             byte buffer[] = new byte[4 * 1024];
-            int offset=0;
+            int offset;
             while ((offset=input.read(buffer)) != -1) {
                 output.write(buffer,0,offset);
             }

@@ -9,25 +9,24 @@ import com.facebook.imagepipeline.decoder.ProgressiveJpegConfig;
 import com.facebook.imagepipeline.image.ImmutableQualityInfo;
 import com.facebook.imagepipeline.image.QualityInfo;
 import com.squareup.leakcanary.LeakCanary;
-import com.squareup.leakcanary.RefWatcher;
 import com.yanxing.util.ConstantValue;
 import com.yanxing.util.FileUtil;
 
 import java.io.File;
 
 /**
- * APP初始化配置
  * Created by lishuangxiang on 2016/1/26.
  */
 public class MyApplication extends Application {
-
-    private RefWatcher refWatcher;
 
     @Override
     public void onCreate() {
         super.onCreate();
         initFresco();
-        refWatcher=LeakCanary.install(this);
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
     }
 
     /**
@@ -59,15 +58,6 @@ public class MyApplication extends Application {
                 .setMainDiskCacheConfig(diskCacheConfig)//磁盘缓存配置
                 .build();
         Fresco.initialize(getApplicationContext(),imagePipelineConfig);
-    }
-
-
-    public RefWatcher getRefWatcher() {
-        return refWatcher;
-    }
-
-    public void setRefWatcher(RefWatcher refWatcher) {
-        this.refWatcher = refWatcher;
     }
 
 }

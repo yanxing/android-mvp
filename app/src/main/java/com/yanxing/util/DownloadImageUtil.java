@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 
 import java.io.InputStream;
+import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.concurrent.ExecutorService;
@@ -20,11 +21,12 @@ public class DownloadImageUtil {
     private DownloadListener mDownloadListener;
 
     public static DownloadImageUtil getInstance() {
-        return SingleHolder.mDownloadUtils;
+        return SingleHolder.mDownloadUtils.get();
     }
 
     private static class SingleHolder {
-        private static final DownloadImageUtil mDownloadUtils = new DownloadImageUtil();
+        private final static WeakReference<DownloadImageUtil> mDownloadUtils
+                =new WeakReference<>(new DownloadImageUtil());
     }
 
     private DownloadImageUtil() {

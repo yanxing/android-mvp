@@ -11,4 +11,5 @@
     <string name="official_account">公众号：</string>
     <string name="yi_save_photo">已保存到相册</string>
     <string name="save_img_to_photo">保存图片到相册</string>
+    <string name="copy_page">已复制该文章链接</string>
 </resources>

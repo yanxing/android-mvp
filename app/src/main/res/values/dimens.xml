@@ -16,4 +16,5 @@
     <dimen name="margin80">80dp</dimen>
     <dimen name="padding12">12dp</dimen>
     <dimen name="padding10">10dp</dimen>
+    <dimen name="margin10">10dp</dimen>
 </resources>
