@@ -1,4 +1,4 @@
-package yanxing.com;
+package com.yanxing;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

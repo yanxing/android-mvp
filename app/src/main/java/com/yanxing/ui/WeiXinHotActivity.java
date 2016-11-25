@@ -27,6 +27,7 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 
 /**
  * 微信精选列表,网络数据和非UI逻辑在WeiXinHotPresenter里面
+ * Created by lishuangxiang on 2016/11/23.
  */
 public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPresenter>
         implements WeiXinHotView {
@@ -82,7 +83,7 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 mPullDownFresh = true;
-                mPresenter.loadData(mType, PAGE_SIZE, 1);
+                mPresenter.loadData(mType, PAGE_SIZE, 1, getApplicationContext());
             }
         });
         mPtrFrameLayout.autoRefresh(true);
@@ -93,7 +94,7 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
                 super.onScrolled(recyclerView, dx, dy);
                 if (mPresenter.isSlideToBottom(mRecyclerView)) {
                     mPullDownFresh = false;
-                    mPresenter.loadData(mType, PAGE_SIZE, ++mCurrentPage);
+                    mPresenter.loadData(mType, PAGE_SIZE, ++mCurrentPage, getApplicationContext());
                 }
             }
         });
@@ -130,31 +131,31 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
         switch (view.getId()) {
             case R.id.travel:
                 mType = TYPE[0];
-                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage, getApplicationContext());
                 break;
             case R.id.shoot:
                 mType = TYPE[1];
-                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage, getApplicationContext());
                 break;
             case R.id.beauty_passage:
                 mType = TYPE[2];
-                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage, getApplicationContext());
                 break;
             case R.id.beauty_food:
                 mType = TYPE[3];
-                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage, getApplicationContext());
                 break;
             case R.id.work:
                 mType = TYPE[4];
-                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage, getApplicationContext());
                 break;
             case R.id.health:
                 mType = TYPE[5];
-                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage, getApplicationContext());
                 break;
             case R.id.belle:
                 mType = TYPE[6];
-                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage, getApplicationContext());
                 break;
         }
     }

@@ -1,4 +1,4 @@
-package yanxing;
+package com.yanxing;
 
 import org.junit.Test;
 

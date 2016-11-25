@@ -9,4 +9,6 @@
     <string name="woman">女人</string>
     <string name="belle">美女</string>
     <string name="official_account">公众号：</string>
+    <string name="yi_save_photo">已保存到相册</string>
+    <string name="save_img_to_photo">保存图片到相册</string>
 </resources>
