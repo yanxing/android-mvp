@@ -1,8 +1,5 @@
 package com.yanxing.ui;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
@@ -76,17 +73,6 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
                         Intent intent = new Intent(getApplicationContext(), WeiXinHotDetailActivity.class);
                         intent.putExtra("url", mNewsList.get(position).getUrl());
                         startActivity(intent);
-                    }
-                });
-                //长按复制文章链接(附加)
-                holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-                    @Override
-                    public boolean onLongClick(View view) {
-                        ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                        ClipData myClip = ClipData.newPlainText(mNewsList.get(position).getUrl(), mNewsList.get(position).getUrl());
-                        clipboardManager.setPrimaryClip(myClip);
-                        showToast(getString(R.string.copy_page));
-                        return true;
                     }
                 });
             }
