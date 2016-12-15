@@ -4,8 +4,8 @@ package com.yanxing.presenter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
+import com.trello.rxlifecycle.components.support.RxFragmentActivity;
 import com.yanxing.base.BasePresenter;
-import com.yanxing.base.MyApplication;
 import com.yanxing.dao.WeiXinDao;
 import com.yanxing.iview.WeiXinHotView;
 import com.yanxing.model.WeiXinHot;
@@ -33,9 +33,11 @@ public class WeiXinHotPresenter extends BasePresenter<WeiXinHotView> {
 
     private File mFile = new File(FileUtil.getStoragePath() + ConstantValue.CACHE);
     private Cache mCache;
+    private RxFragmentActivity mRxFragmentActivity;
 
-    public WeiXinHotPresenter(WeiXinHotView weiXinHotView) {
-        this.mView = weiXinHotView;
+    public WeiXinHotPresenter(WeiXinHotView weiXinHotVie,RxFragmentActivity rxFragmentActivity) {
+        this.mView = weiXinHotVie;
+        this.mRxFragmentActivity=rxFragmentActivity;
         if (!mFile.exists()) {
             mFile.mkdirs();
         }
@@ -63,6 +65,7 @@ public class WeiXinHotPresenter extends BasePresenter<WeiXinHotView> {
 
         WeiXinDao weiXinDao = retrofit.create(WeiXinDao.class);
         weiXinDao.getWeiXinHot(pageSize, word, currentPage)
+                .compose(mRxFragmentActivity.<WeiXinHot>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<WeiXinHot>() {

@@ -8,7 +8,7 @@ public abstract class BasePresenter<T> {
     public T mView;
 
     /**
-     * 解绑
+     * 销毁持有的View
      */
     public void onDestroy() {
         this.mView = null;

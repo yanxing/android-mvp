@@ -119,7 +119,7 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
 
     @Override
     protected WeiXinHotPresenter initPresenter() {
-        return new WeiXinHotPresenter(this);
+        return new WeiXinHotPresenter(this,this);
     }
 
 
