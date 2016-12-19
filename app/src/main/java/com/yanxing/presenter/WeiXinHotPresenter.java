@@ -4,6 +4,7 @@ package com.yanxing.presenter;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
+import com.trello.rxlifecycle.components.support.RxFragment;
 import com.trello.rxlifecycle.components.support.RxFragmentActivity;
 import com.yanxing.base.BasePresenter;
 import com.yanxing.dao.WeiXinDao;
@@ -22,6 +23,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -33,11 +35,14 @@ public class WeiXinHotPresenter extends BasePresenter<WeiXinHotView> {
 
     private File mFile = new File(FileUtil.getStoragePath() + ConstantValue.CACHE);
     private Cache mCache;
-    private RxFragmentActivity mRxFragmentActivity;
+    private Object mRx;
 
-    public WeiXinHotPresenter(WeiXinHotView weiXinHotVie,RxFragmentActivity rxFragmentActivity) {
+    public WeiXinHotPresenter(WeiXinHotView weiXinHotVie,Object rxFragmentOrActivity) {
         this.mView = weiXinHotVie;
-        this.mRxFragmentActivity=rxFragmentActivity;
+        this.mRx=rxFragmentOrActivity;
+        if (!(mRx instanceof RxFragmentActivity)&&!(mRx instanceof RxFragment)){
+            throw new IllegalArgumentException("rxFragmentOrActivity is RxFragment or RxFragmentActivity");
+        }
         if (!mFile.exists()) {
             mFile.mkdirs();
         }
@@ -64,8 +69,14 @@ public class WeiXinHotPresenter extends BasePresenter<WeiXinHotView> {
                 .build();
 
         WeiXinDao weiXinDao = retrofit.create(WeiXinDao.class);
+        Observable.Transformer<WeiXinHot,WeiXinHot> transformer;
+        if (mRx instanceof RxFragmentActivity){
+            transformer=((RxFragmentActivity)mRx).bindToLifecycle();
+        }else{
+            transformer=((RxFragment)mRx).bindToLifecycle();
+        }
         weiXinDao.getWeiXinHot(pageSize, word, currentPage)
-                .compose(mRxFragmentActivity.<WeiXinHot>bindToLifecycle())
+                .compose(transformer)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<WeiXinHot>() {
