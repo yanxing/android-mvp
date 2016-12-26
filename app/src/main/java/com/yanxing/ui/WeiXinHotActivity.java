@@ -24,6 +24,7 @@ import butterknife.OnClick;
 import in.srain.cube.views.ptr.PtrClassicFrameLayout;
 import in.srain.cube.views.ptr.PtrDefaultHandler;
 import in.srain.cube.views.ptr.PtrFrameLayout;
+import rx.Observable;
 
 /**
  * 微信精选列表,网络数据和非UI逻辑在WeiXinHotPresenter里面
@@ -83,7 +84,7 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
                 mPullDownFresh = true;
-                mPresenter.loadData(mType, PAGE_SIZE, 1, getApplicationContext());
+                mPresenter.loadData(mType, PAGE_SIZE, 1);
             }
         });
         mPtrFrameLayout.autoRefresh(true);
@@ -94,7 +95,7 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
                 super.onScrolled(recyclerView, dx, dy);
                 if (mPresenter.isSlideToBottom(mRecyclerView)) {
                     mPullDownFresh = false;
-                    mPresenter.loadData(mType, PAGE_SIZE, ++mCurrentPage, getApplicationContext());
+                    mPresenter.loadData(mType, PAGE_SIZE, ++mCurrentPage);
                 }
             }
         });
@@ -118,8 +119,13 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
     }
 
     @Override
+    public Observable.Transformer<WeiXinHot, WeiXinHot> rxLifecycle() {
+        return this.bindToLifecycle();
+    }
+
+    @Override
     protected WeiXinHotPresenter initPresenter() {
-        return new WeiXinHotPresenter(this,this);
+        return new WeiXinHotPresenter(this,getApplicationContext());
     }
 
 
@@ -131,31 +137,31 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
         switch (view.getId()) {
             case R.id.travel:
                 mType = TYPE[0];
-                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage, getApplicationContext());
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
                 break;
             case R.id.shoot:
                 mType = TYPE[1];
-                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage, getApplicationContext());
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
                 break;
             case R.id.beauty_passage:
                 mType = TYPE[2];
-                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage, getApplicationContext());
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
                 break;
             case R.id.beauty_food:
                 mType = TYPE[3];
-                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage, getApplicationContext());
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
                 break;
             case R.id.work:
                 mType = TYPE[4];
-                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage, getApplicationContext());
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
                 break;
             case R.id.health:
                 mType = TYPE[5];
-                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage, getApplicationContext());
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
                 break;
             case R.id.belle:
                 mType = TYPE[6];
-                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage, getApplicationContext());
+                mPresenter.loadData(mType, PAGE_SIZE, mCurrentPage);
                 break;
         }
     }
