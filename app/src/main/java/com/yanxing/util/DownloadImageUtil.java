@@ -32,7 +32,13 @@ public class DownloadImageUtil {
     private DownloadImageUtil() {
     }
 
-    public void downloadImage(final String url, DownloadListener downloadListener) {
+    /**
+     * 下载图片
+     * @param url 图片路径
+     * @param savePath 图片保存路径
+     * @param downloadListener
+     */
+    public void downloadImage(final String url, final String savePath, DownloadListener downloadListener) {
         this.mDownloadListener = downloadListener;
         mExecutorService.submit(new Runnable() {
             @Override
@@ -45,16 +51,19 @@ public class DownloadImageUtil {
                     conn.connect();
                     if (conn.getResponseCode() == 200) {
                         InputStream inStream = conn.getInputStream();
-                        FileUtil.writeStInput(FileUtil.getStoragePath() + "DCIM/Camera/"
-                                , System.currentTimeMillis() + ".jpg", inStream);
+                        final String imageName=System.currentTimeMillis() + ".jpg";
+                        FileUtil.writeStInput(savePath,imageName, inStream);
                         new Handler(Looper.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run() {
-                                mDownloadListener.finish();
+                                mDownloadListener.success(savePath+imageName);
                             }
                         });
+                    }else {
+                        mDownloadListener.error(conn.getResponseMessage());
                     }
                 } catch (Exception e) {
+                    mDownloadListener.error(e.getMessage());
                     e.printStackTrace();
                 }
             }
@@ -62,6 +71,10 @@ public class DownloadImageUtil {
     }
 
     public interface DownloadListener {
-        void finish();
+        /**
+         * @param path 下载成功保存的路径
+         */
+        void success(String path);
+        void error(String message);
     }
 }
