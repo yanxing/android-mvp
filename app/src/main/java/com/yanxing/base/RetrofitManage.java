@@ -15,12 +15,13 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
- * 单例Retrofit，配置缓存和服务器地址
+ * 配置缓存和服务器地址
  * Created by lishuangxiang on 2016/12/26.
  */
 public class RetrofitManage {
 
     private Cache mCache;
+    private Retrofit.Builder mBuilder;
 
     private RetrofitManage() {
         File file = new File(FileUtil.getStoragePath() + ConstantValue.CACHE);
@@ -28,6 +29,10 @@ public class RetrofitManage {
             file.mkdirs();
         }
         mCache = new Cache(file, ConstantValue.MAX_DISK_CACHE_VERYLOW_SIZE);
+        mBuilder=new Retrofit.Builder()
+                .baseUrl(ConstantValue.URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create());
     }
 
     public static RetrofitManage getInstance() {
@@ -38,23 +43,15 @@ public class RetrofitManage {
         private static final RetrofitManage retrofitManage = new RetrofitManage();
     }
 
-    /**
-     * 初始化Retrofit对象，初始缓存策略（无网络读取缓存，有网络不使用缓存）
-     *
-     * @param context
-     * @return
-     */
-    public Retrofit initRetrofit(Context context) {
+    public Retrofit getRetrofit(Context context) {
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(new OkHttpOffLineCache(context))
                 .cache(mCache)
                 .build();
+        return getRetrofit(client);
+    }
 
-        return new Retrofit.Builder()
-                .baseUrl(ConstantValue.URL)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                .build();
+    public Retrofit getRetrofit(OkHttpClient okHttpClient){
+        return mBuilder.client(okHttpClient).build();
     }
 }

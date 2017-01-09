@@ -59,5 +59,4 @@ public class MyApplication extends Application {
                 .build();
         Fresco.initialize(getApplicationContext(),imagePipelineConfig);
     }
-
 }
