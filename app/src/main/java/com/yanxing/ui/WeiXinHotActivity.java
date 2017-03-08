@@ -62,17 +62,17 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
                 R.layout.adapter_wei_xin_hot) {
             @Override
             public void onBindViewHolder(RecyclerViewAdapter.MyViewHolder holder, final int position) {
-                holder.setText(R.id.title, mNewsList.get(position).getTitle());
+                holder.setText(R.id.title, mDataList.get(position).getTitle());
                 SimpleDraweeView picImg = (SimpleDraweeView) holder.findViewById(R.id.simple_drawee_view);
-                picImg.setImageURI(Uri.parse(mNewsList.get(position).getPicUrl()));
-                holder.setText(R.id.src, getString(R.string.official_account) + mNewsList.get(position).getDescription());
-                holder.setText(R.id.time, AppUtil.formate(mNewsList.get(position).getCtime()));
+                picImg.setImageURI(Uri.parse(mDataList.get(position).getPicUrl()));
+                holder.setText(R.id.src, getString(R.string.official_account) + mDataList.get(position).getDescription());
+                holder.setText(R.id.time, AppUtil.formate(mDataList.get(position).getCtime()));
                 //点击事件
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         Intent intent = new Intent(getApplicationContext(), WeiXinHotDetailActivity.class);
-                        intent.putExtra("url", mNewsList.get(position).getUrl());
+                        intent.putExtra("url", mDataList.get(position).getUrl());
                         startActivity(intent);
                     }
                 });
