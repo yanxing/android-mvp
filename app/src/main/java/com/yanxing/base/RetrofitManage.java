@@ -51,7 +51,7 @@ public class RetrofitManage {
         return getRetrofit(client);
     }
 
-    private Retrofit getRetrofit(OkHttpClient okHttpClient){
+    public Retrofit getRetrofit(OkHttpClient okHttpClient){
         return mBuilder.client(okHttpClient).build();
     }
 }
