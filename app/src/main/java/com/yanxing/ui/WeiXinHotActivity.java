@@ -12,7 +12,7 @@ import com.yanxing.adapterlibrary.RecyclerViewAdapter;
 import com.yanxing.base.BaseActivity;
 import com.yanxing.iview.WeiXinHotView;
 import com.yanxing.model.WeiXinHot;
-import com.yanxing.presenter.WeiXinHotPresenter;
+import com.yanxing.presenter.WeiXinHotPresenterImpl;
 import com.yanxing.util.AppUtil;
 import com.yanxing.util.ErrorCodeUtil;
 
@@ -30,7 +30,7 @@ import rx.Observable;
  * 微信精选列表,网络数据和非UI逻辑在WeiXinHotPresenter里面
  * Created by lishuangxiang on 2016/11/23.
  */
-public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPresenter>
+public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPresenterImpl>
         implements WeiXinHotView {
 
     @BindView(R.id.recyclerView)
@@ -124,8 +124,8 @@ public class WeiXinHotActivity extends BaseActivity<WeiXinHotView, WeiXinHotPres
     }
 
     @Override
-    protected WeiXinHotPresenter initPresenter() {
-        return new WeiXinHotPresenter(this,getApplicationContext());
+    protected WeiXinHotPresenterImpl initPresenter() {
+        return new WeiXinHotPresenterImpl(this,getApplicationContext());
     }
 
 

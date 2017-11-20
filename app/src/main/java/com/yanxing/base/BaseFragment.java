@@ -16,7 +16,7 @@ import butterknife.ButterKnife;
  * Created by lishuangxiang on 2016/11/30.
  */
 
-public abstract class BaseFragment<V, T extends BasePresenter<V>> extends RxFragment {
+public abstract class BaseFragment<V extends BaseView, T extends BasePresenterImpl<V>> extends RxFragment {
 
     public T mPresenter;
 

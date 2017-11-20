@@ -6,7 +6,7 @@ import android.webkit.WebView;
 
 import com.yanxing.R;
 import com.yanxing.base.BaseActivity;
-import com.yanxing.base.BasePresenter;
+import com.yanxing.base.BasePresenterImpl;
 
 import butterknife.BindView;
 
@@ -35,7 +35,8 @@ public class WeiXinHotDetailActivity extends BaseActivity {
     }
 
     @Override
-    protected BasePresenter initPresenter() {
+    protected BasePresenterImpl initPresenter() {
         return null;
     }
+
 }
