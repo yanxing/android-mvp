@@ -8,16 +8,7 @@ import com.facebook.common.util.ByteConstants;
 
 public class ConstantValue {
 
-    /**
-     * 百度apistore
-     */
-    public static final String APIKEY="c2d0a9c6eaac04c80cef2dfb7dcbf10d";
-
-    public static final String URL="http://apis.baidu.com/";
-    /**
-     * 微信精选
-     */
-    public static final String WEIXIN_HOT="txapi/weixin/wxhot";
+    public static final String URL="https://api.douban.com/v2/movie/";
 
 
 

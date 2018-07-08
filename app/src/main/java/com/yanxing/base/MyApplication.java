@@ -8,7 +8,7 @@ import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.facebook.imagepipeline.decoder.ProgressiveJpegConfig;
 import com.facebook.imagepipeline.image.ImmutableQualityInfo;
 import com.facebook.imagepipeline.image.QualityInfo;
-import com.squareup.leakcanary.LeakCanary;
+import com.yanxing.networklibrary.RetrofitManage;
 import com.yanxing.util.ConstantValue;
 import com.yanxing.util.FileUtil;
 
@@ -22,11 +22,8 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        RetrofitManage.getInstance().init(ConstantValue.URL,true);
         initFresco();
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            return;
-        }
-        LeakCanary.install(this);
     }
 
     /**
@@ -39,6 +36,7 @@ public class MyApplication extends Application {
                 return scanNumber + 2;
             }
 
+            @Override
             public QualityInfo getQualityInfo(int scanNumber) {
                 boolean isGoodEnough = (scanNumber >= 5);
                 return ImmutableQualityInfo.of(scanNumber, isGoodEnough, false);

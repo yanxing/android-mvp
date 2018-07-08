@@ -1,6 +1,9 @@
 package com.yanxing.util;
 
 import android.os.Environment;
+import android.util.Log;
+
+import com.yanxing.BuildConfig;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -52,7 +55,9 @@ public class FileUtil {
                 e.printStackTrace();
             }
         } else {
-            LogUtil.i(TAG, "外存设备不存在");
+            if (BuildConfig.DEBUG) {
+                Log.i(TAG, "外存设备不存在");
+            }
         }
         return file;
     }
@@ -70,7 +75,9 @@ public class FileUtil {
             }
             return file.exists();
         } else {
-            LogUtil.i(TAG, "外存设备不存在");
+            if (BuildConfig.DEBUG) {
+                Log.i(TAG, "外存设备不存在");
+            }
         }
         return false;
     }
@@ -85,10 +92,14 @@ public class FileUtil {
         if (checkStorage()) {//存储设备存在
             if (!dir.exists()) {
                 Boolean bo=dir.mkdir();
-                LogUtil.i(TAG, bo.toString());
+                if (BuildConfig.DEBUG) {
+                    Log.i(TAG, "外存设备不存在");
+                }
             }
         } else {
-            LogUtil.i(TAG, "外存设备不存在");
+            if (BuildConfig.DEBUG) {
+                Log.i(TAG, "外存设备不存在");
+            }
         }
         return dir;
     }
@@ -105,7 +116,9 @@ public class FileUtil {
                 file.delete();
             }
         } else {
-            LogUtil.i(TAG, "外存设备不存在");
+            if (BuildConfig.DEBUG) {
+                Log.i(TAG, "外存设备不存在");
+            }
         }
     }
 
@@ -153,7 +166,9 @@ public class FileUtil {
                 file.renameTo(file1);
             }
         }else {
-            LogUtil.i(TAG, "外存设备不存在");
+            if (BuildConfig.DEBUG) {
+                Log.i(TAG, "外存设备不存在");
+            }
         }
     }
 }
