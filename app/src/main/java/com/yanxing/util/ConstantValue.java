@@ -31,9 +31,4 @@ public class ConstantValue {
      * 缓存图片文件夹
      */
     public static final String CACHE_IMAGE="yanxing/image/";
-
-    /**
-     * 文字缓存文件夹
-     */
-    public static final String CACHE="yanxing/cache/";
 }

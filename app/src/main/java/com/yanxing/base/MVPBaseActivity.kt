@@ -1,9 +1,6 @@
 package com.yanxing.base
 
-import android.content.Context
 import android.os.Bundle
-import com.trello.rxlifecycle2.LifecycleProvider
-import com.trello.rxlifecycle2.android.ActivityEvent
 
 
 /**
@@ -16,15 +13,15 @@ abstract class MVPBaseActivity<V : BaseView, P : BasePresenter<V>> : BaseActivit
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        mPresenter = createPresenter(this,applicationContext)
+        mPresenter = createPresenter()
         mPresenter?.attachView(this as V)
         super.onCreate(savedInstanceState)
     }
 
     /**
-     * 创建Presenter,lifecycleProvider用于防止Rxjava内存泄露
+     * 创建Presenter，不含需要初始的参数
      */
-    abstract fun createPresenter(lifecycleProvider: LifecycleProvider<ActivityEvent>,context: Context): P
+    abstract fun createPresenter(): P
 
     override fun onDestroy() {
         super.onDestroy()

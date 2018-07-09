@@ -7,6 +7,6 @@ package com.yanxing.presenter
  */
 interface TopMoviePresenter  {
 
-    fun getTopMovie(start:Int,count:Int)
+    fun getTopMovie(index:Int)
 
 }

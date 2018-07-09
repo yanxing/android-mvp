@@ -1,6 +1,7 @@
 package com.yanxing.base;
 
 import android.app.Application;
+import android.os.Environment;
 
 import com.facebook.cache.disk.DiskCacheConfig;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -10,7 +11,6 @@ import com.facebook.imagepipeline.image.ImmutableQualityInfo;
 import com.facebook.imagepipeline.image.QualityInfo;
 import com.yanxing.networklibrary.RetrofitManage;
 import com.yanxing.util.ConstantValue;
-import com.yanxing.util.FileUtil;
 
 import java.io.File;
 
@@ -18,6 +18,8 @@ import java.io.File;
  * Created by lishuangxiang on 2016/1/26.
  */
 public class MyApplication extends Application {
+
+    private static final String STORAGE_PATH = Environment.getExternalStorageDirectory() + "/";
 
     @Override
     public void onCreate() {
@@ -42,7 +44,7 @@ public class MyApplication extends Application {
                 return ImmutableQualityInfo.of(scanNumber, isGoodEnough, false);
             }
         };
-        File file=new File(FileUtil.getStoragePath());
+        File file=new File(STORAGE_PATH);
         //自定义图片的磁盘配置,fresco缓存文件后缀cnt
         DiskCacheConfig diskCacheConfig =  DiskCacheConfig.newBuilder(this)
                 .setBaseDirectoryPath(file)//缓存图片基路径
