@@ -13,7 +13,7 @@ import java.lang.reflect.Method;
 /**
  * @author 李双祥 on 2018/7/9.
  */
-public class StatusUtil {
+public class StatusBarUtil {
 
     /**
      * MIUI6以上设置状态栏字体为灰色

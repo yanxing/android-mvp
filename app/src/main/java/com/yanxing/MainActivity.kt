@@ -8,7 +8,7 @@ import com.yanxing.base.MVPBaseActivity
 import com.yanxing.model.Movie
 import com.yanxing.presenter.TopMoviePresenterImpl
 import com.yanxing.util.RecyclerViewAdapter
-import com.yanxing.util.StatusUtil
+import com.yanxing.util.StatusBarUtil
 import com.yanxing.view.MovieView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.collections.ArrayList
@@ -31,9 +31,9 @@ class MainActivity : MVPBaseActivity<MovieView, TopMoviePresenterImpl>(), MovieV
     }
 
     override fun afterInstanceView() {
-        StatusUtil.setStatusBarDark6(this)
-        StatusUtil.setStatusBarDarkIcon(window, true)
-        StatusUtil.setStatusBarDarkMode(true, this)
+        StatusBarUtil.setStatusBarDark6(this)
+        StatusBarUtil.setStatusBarDarkIcon(window, true)
+        StatusBarUtil.setStatusBarDarkMode(true, this)
         mPresenter?.initPresenter(this, applicationContext, swipeToLoadLayout)
         initMovieAdapter()
     }
