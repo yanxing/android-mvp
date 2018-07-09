@@ -1,4 +1,4 @@
-package com.yanxing.base;
+package com.yanxing;
 
 import android.app.Application;
 import android.os.Environment;

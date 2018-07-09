@@ -16,7 +16,7 @@ open class BasePresenter<V : BaseView>{
     }
 
     /**
-     * 接触绑定
+     * 解除绑定
      */
     fun detachView() {
         mIView=null
