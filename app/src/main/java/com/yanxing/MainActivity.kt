@@ -16,7 +16,7 @@ import com.facebook.drawee.backends.pipeline.Fresco
 
 
 /**
- *
+ * 列表显示豆瓣电影top排行榜
  * @author 李双祥 on 2018/7/5.
  */
 class MainActivity : MVPBaseActivity<MovieView, TopMoviePresenterImpl>(), MovieView, OnLoadMoreListener, OnRefreshListener {
