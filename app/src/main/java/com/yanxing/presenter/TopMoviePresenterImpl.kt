@@ -17,10 +17,6 @@ class TopMoviePresenterImpl() : TopMoviePresenter, BasePresenter<MovieView>() {
 
     private lateinit var mContext: Context
 
-    /**
-     * @param lifecycleProvider 用于取消订阅
-     * @param pullToRefresh retrofit请求完成或出错，重置刷新组件状态
-     */
     @Inject
     constructor(context: Context) : this() {
         this.mContext = context
