@@ -1,8 +1,6 @@
 package com.yanxing
 
 import android.support.v7.widget.LinearLayoutManager
-import com.aspsine.swipetoloadlayout.OnLoadMoreListener
-import com.aspsine.swipetoloadlayout.OnRefreshListener
 import com.facebook.drawee.view.SimpleDraweeView
 import com.yanxing.base.MVPBaseActivity
 import com.yanxing.model.Movie
@@ -19,7 +17,8 @@ import com.facebook.drawee.backends.pipeline.Fresco
  * 列表显示豆瓣电影top排行榜
  * @author 李双祥 on 2018/7/5.
  */
-class MainActivity : MVPBaseActivity<MovieView, TopMoviePresenterImpl>(), MovieView, OnLoadMoreListener, OnRefreshListener {
+class MainActivity : MVPBaseActivity<MovieView, TopMoviePresenterImpl>(), MovieView{
+
 
     private lateinit var mMovieAdapter: RecyclerViewAdapter<Movie.SubjectsBean>
     private var mMovieList = ArrayList<Movie.SubjectsBean>()
@@ -34,7 +33,7 @@ class MainActivity : MVPBaseActivity<MovieView, TopMoviePresenterImpl>(), MovieV
         StatusBarUtil.setStatusBarDark6(this)
         StatusBarUtil.setStatusBarDarkIcon(window, true)
         StatusBarUtil.setStatusBarDarkMode(true, this)
-        mPresenter?.initPresenter(this, applicationContext, swipeToLoadLayout)
+        mPresenter?.initPresenter(applicationContext)
         initMovieAdapter()
     }
 
@@ -80,8 +79,12 @@ class MainActivity : MVPBaseActivity<MovieView, TopMoviePresenterImpl>(), MovieV
     override fun onLoadMore() {
         mIndex++
         mPresenter?.getTopMovie(mIndex)
-
     }
+
+    override fun refreshComplete() {
+        swipeToLoadLayout.refreshComplete()
+    }
+
 
     public override fun onPause() {
         Fresco.getImagePipeline().pause()
