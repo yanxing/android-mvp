@@ -1,29 +1,39 @@
 package com.yanxing.base
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.support.AndroidSupportInjection
+import dagger.android.support.HasSupportFragmentInjector
+import javax.inject.Inject
 
 /**
  * MVP基础Fragment
  * @author 李双祥 on 2018/7/9.
  */
-abstract class MVPBaseFragment<V : BaseView, P : BasePresenter<V>> : BaseFragment() {
+abstract class MVPBaseFragment<V : BaseView, P : BasePresenter<V>> : BaseFragment() , HasSupportFragmentInjector {
 
-    protected var mPresenter: P? = null
-
+    @Inject
+    lateinit var childFragmentInjector: DispatchingAndroidInjector<Fragment>
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        mPresenter = createPresenter()
-        mPresenter?.attachView(this as V)
+        AndroidSupportInjection.inject(this)
+        getPresenter()?.attachView(this as V)
         super.onCreate(savedInstanceState)
     }
 
     /**
-     * 创建Presenter，不含需要初始的参数
+     * 得到子类中的Presenter
      */
-    abstract fun createPresenter(): P
+    abstract fun getPresenter(): P?
+
+    override fun supportFragmentInjector(): AndroidInjector<Fragment> {
+        return childFragmentInjector
+    }
 
     override fun onDestroy() {
         super.onDestroy()
-        mPresenter?.detachView()
+        getPresenter()?.detachView()
     }
 }

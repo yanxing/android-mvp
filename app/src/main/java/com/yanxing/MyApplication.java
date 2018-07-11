@@ -1,6 +1,5 @@
 package com.yanxing;
 
-import android.app.Application;
 import android.os.Environment;
 
 import com.facebook.cache.disk.DiskCacheConfig;
@@ -14,10 +13,13 @@ import com.yanxing.util.ConstantValue;
 
 import java.io.File;
 
+import dagger.android.AndroidInjector;
+import dagger.android.DaggerApplication;
+
 /**
  * Created by lishuangxiang on 2016/1/26.
  */
-public class MyApplication extends Application {
+public class MyApplication extends DaggerApplication {
 
     private static final String STORAGE_PATH = Environment.getExternalStorageDirectory() + "/";
 
@@ -26,6 +28,11 @@ public class MyApplication extends Application {
         super.onCreate();
         RetrofitManage.getInstance().init(ConstantValue.URL,true);
         initFresco();
+    }
+
+    @Override
+    protected AndroidInjector<? extends DaggerApplication> applicationInjector() {
+        return DaggerAppComponent.builder().application(this).build();
     }
 
     /**

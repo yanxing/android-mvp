@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion COMPILE_SDK_VERSION as int
@@ -20,15 +21,29 @@ android {
     }
 }
 
+kapt {
+    generateStubs = true
+}
+
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile "com.android.support:appcompat-v7:${SUPPORT_VERSION}"
-    compile "com.android.support:design:${SUPPORT_VERSION}"
-    compile "com.android.support:recyclerview-v7:${SUPPORT_VERSION}"
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlin_version}"
-    compile 'com.facebook.fresco:fresco:1.5.0'
-    compile 'com.github.Aspsine:SwipeToLoadLayout:1.0.4'
-    compile 'com.yanxing:networklibrary:1.0.9'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation  fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation  'junit:junit:4.12'
+    implementation  "com.android.support:appcompat-v7:${SUPPORT_VERSION}"
+    implementation  "com.android.support:design:${SUPPORT_VERSION}"
+    implementation  "com.android.support:recyclerview-v7:${SUPPORT_VERSION}"
+    implementation  "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlin_version}"
+    implementation  'com.facebook.fresco:fresco:1.5.0'
+    implementation  'com.github.Aspsine:SwipeToLoadLayout:1.0.4'
+    implementation  'com.yanxing:networklibrary:1.0.9'
+    implementation  'com.android.support.constraint:constraint-layout:1.0.2'
+
+    // Dagger dependencies
+//    annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+    kapt "com.google.dagger:dagger-compiler:${daggerVersion}"
+    compileOnly 'org.glassfish:javax.annotation:10.0-b28'
+    implementation  "com.google.dagger:dagger:$daggerVersion"
+    implementation  "com.google.dagger:dagger-android:${daggerVersion}"
+    implementation "com.google.dagger:dagger-android-support:${daggerVersion}"
+//    annotationProcessor "com.google.dagger:dagger-android-processor:$daggerVersion"
+    kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 }

@@ -1,8 +1,6 @@
 package com.yanxing
 
 import android.support.v7.widget.LinearLayoutManager
-import com.aspsine.swipetoloadlayout.OnLoadMoreListener
-import com.aspsine.swipetoloadlayout.OnRefreshListener
 import com.facebook.drawee.view.SimpleDraweeView
 import com.yanxing.base.MVPBaseActivity
 import com.yanxing.model.Movie
@@ -13,18 +11,21 @@ import com.yanxing.view.MovieView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.collections.ArrayList
 import com.facebook.drawee.backends.pipeline.Fresco
+import javax.inject.Inject
 
 
 /**
  * 列表显示豆瓣电影top排行榜
  * @author 李双祥 on 2018/7/5.
  */
-class MainActivity : MVPBaseActivity<MovieView, TopMoviePresenterImpl>(), MovieView, OnLoadMoreListener, OnRefreshListener {
+class MainActivity : MVPBaseActivity<MovieView, TopMoviePresenterImpl>(), MovieView {
+
+    @Inject
+    lateinit var mTopMoviePresenterImpl: TopMoviePresenterImpl
 
     private lateinit var mMovieAdapter: RecyclerViewAdapter<Movie.SubjectsBean>
     private var mMovieList = ArrayList<Movie.SubjectsBean>()
     private var mIndex = 0
-
 
     override fun getLayoutResID(): Int {
         return R.layout.activity_main
@@ -34,8 +35,11 @@ class MainActivity : MVPBaseActivity<MovieView, TopMoviePresenterImpl>(), MovieV
         StatusBarUtil.setStatusBarDark6(this)
         StatusBarUtil.setStatusBarDarkIcon(window, true)
         StatusBarUtil.setStatusBarDarkMode(true, this)
-        mPresenter?.initPresenter(this, applicationContext, swipeToLoadLayout)
         initMovieAdapter()
+    }
+
+    override fun getPresenter(): TopMoviePresenterImpl? {
+        return mTopMoviePresenterImpl
     }
 
     private fun initMovieAdapter() {
@@ -58,10 +62,6 @@ class MainActivity : MVPBaseActivity<MovieView, TopMoviePresenterImpl>(), MovieV
         swipeToLoadLayout.isRefreshing = true
     }
 
-    override fun createPresenter(): TopMoviePresenterImpl {
-        return TopMoviePresenterImpl()
-    }
-
     override fun getMovieList(movie: Movie?) {
         if (movie != null) {
             if (mIndex == 0) {
@@ -74,13 +74,17 @@ class MainActivity : MVPBaseActivity<MovieView, TopMoviePresenterImpl>(), MovieV
 
     override fun onRefresh() {
         mIndex = 0
-        mPresenter?.getTopMovie(mIndex)
+        mTopMoviePresenterImpl.getTopMovie(mIndex)
     }
 
     override fun onLoadMore() {
         mIndex++
-        mPresenter?.getTopMovie(mIndex)
+        mTopMoviePresenterImpl.getTopMovie(mIndex)
 
+    }
+
+    override fun refreshComplete() {
+        swipeToLoadLayout.refreshComplete()
     }
 
     public override fun onPause() {
