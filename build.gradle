@@ -3,7 +3,7 @@
 buildscript {
 
     // buildToolsVersion
-    ext.BUILD_TOOLS_VERSION = '26.0.2'
+    ext.BUILD_TOOLS_VERSION = '27.0.3'
     // targetSdkVersion
     ext.TARGET_SDK_VERSION = 25
     // Library minSdkVersion
